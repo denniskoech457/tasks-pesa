@@ -1,1 +1,1 @@
-<?php header('Location: signin.php'); exit; ?>
+<?php header('Location: /signin.php'); exit; ?>

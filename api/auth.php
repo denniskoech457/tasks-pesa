@@ -51,6 +51,6 @@ function has_paid(){
     return $latest && (($latest['status'] ?? '') === 'paid');
 }
 
-function require_login(){ if(!is_logged_in()){ header('Location: signin.php'); exit; } }
-function require_paid(){ require_login(); if(!has_paid()){ header('Location: dashboard.php?pay_required=1'); exit; } }
+function require_login(){ if(!is_logged_in()){ header('Location: /signin.php'); exit; } }
+function require_paid(){ require_login(); if(!has_paid()){ header('Location: /dashboard.php?pay_required=1'); exit; } }
 ?>
