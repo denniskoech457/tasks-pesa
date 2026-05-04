@@ -568,7 +568,8 @@
 
 <body>
   <div class="auth-page">
-    <form class="auth-card" id="signinForm">
+    <form class="auth-card" action="/auth.php" method="POST">
+      <input type="hidden" name="action" value="signin">
       <div class="auth-brand">
         <div class="logo">L</div><strong>LINKSPHERE AGENCIES</strong>
       </div>
@@ -628,31 +629,7 @@
       })
     });
   </script>
-  <script>
-    document.getElementById('signinForm').addEventListener('submit', function(e) {
-      e.preventDefault();
 
-      const emailAddress = document.getElementById('signinEmail').value.trim().toLowerCase();
-      const userPassword = document.getElementById('signinPassword').value;
-      const errorBox = document.getElementById('error');
-
-      const account = JSON.parse(localStorage.getItem('ls_account_' + emailAddress) || 'null');
-
-      if (!account || account.password !== userPassword) {
-        errorBox.textContent = 'Invalid email or password.';
-        return;
-      }
-
-      setCookie('ls_user', account.name, 30);
-      setCookie('ls_email', account.email, 30);
-
-      if (!getCookie('ls_paid')) {
-        setCookie('ls_paid', '0', 30);
-      }
-
-      window.location.href = '/dashboard.php';
-    });
-  </script>
 </body>
 
 </html>
