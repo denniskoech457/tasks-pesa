@@ -1,56 +1,93 @@
 <?php
-function current_user(){ return $_COOKIE['ls_user'] ?? ''; }
-function current_email(){ return strtolower(trim($_COOKIE['ls_email'] ?? '')); }
-function is_logged_in(){ return current_user() !== ''; }
 
-function data_dir(){
-    $dir = __DIR__ . '/data';
-    if(!is_dir($dir)) mkdir($dir, 0755, true);
-    return $dir;
-}
+// Always start clean
+header("Content-Type: text/html; charset=UTF-8");
 
-function payments_file(){ return data_dir() . '/payments.json'; }
+// Get action
+$action = $_POST['action'] ?? '';
 
-function read_payments(){
-    $file = payments_file();
-    if(!file_exists($file)) return [];
-    $json = file_get_contents($file);
-    $data = json_decode($json, true);
-    return is_array($data) ? $data : [];
-}
+// =========================
+// SIGN UP
+// =========================
+if ($action === 'signup') {
 
-function write_payments($payments){
-    file_put_contents(payments_file(), json_encode($payments, JSON_PRETTY_PRINT));
-}
+    $name = trim($_POST['name'] ?? '');
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
 
-function find_latest_payment_by_email($email){
-    $payments = read_payments();
-    $latest = null;
-    foreach($payments as $ref => $payment){
-        if(strtolower($payment['email'] ?? '') === strtolower($email)){
-            if(!$latest || strtotime($payment['created_at'] ?? '1970-01-01') > strtotime($latest['created_at'] ?? '1970-01-01')){
-                $latest = $payment + ['reference' => $ref];
-            }
-        }
+    // Validation
+    if ($name === '' || $email === '' || $password === '') {
+        header("Location: /signup.php?error=missing");
+        exit;
     }
-    return $latest;
+
+    // Save in cookies (DEMO PURPOSE ONLY)
+    setcookie("user_name", $name, time() + (86400 * 30), "/");
+    setcookie("user_email", $email, time() + (86400 * 30), "/");
+    setcookie("user_password", $password, time() + (86400 * 30), "/");
+    setcookie("logged_in", "yes", time() + (86400 * 30), "/");
+
+    // Default payment status
+    setcookie("paid", "no", time() + (86400 * 30), "/");
+
+    // Redirect to payment page
+    header("Location: /payment-pending.php");
+    exit;
 }
 
-function mark_payment($reference, $data){
-    $payments = read_payments();
-    $existing = $payments[$reference] ?? [];
-    $payments[$reference] = array_merge($existing, $data, ['updated_at' => date('c')]);
-    write_payments($payments);
+
+// =========================
+// SIGN IN
+// =========================
+if ($action === 'signin') {
+
+    $email = trim($_POST['email'] ?? '');
+    $password = trim($_POST['password'] ?? '');
+
+    $savedEmail = $_COOKIE['user_email'] ?? '';
+    $savedPassword = $_COOKIE['user_password'] ?? '';
+
+    // Check credentials
+    if ($email === $savedEmail && $password === $savedPassword) {
+
+        setcookie("logged_in", "yes", time() + (86400 * 30), "/");
+
+        // Check payment status
+        if (($_COOKIE['paid'] ?? '') === 'yes') {
+            header("Location: /dashboard.php");
+        } else {
+            header("Location: /payment-pending.php");
+        }
+        exit;
+    }
+
+    // Invalid login
+    header("Location: /signin.php?error=invalid");
+    exit;
 }
 
-function has_paid(){
-    if(($_COOKIE['ls_paid'] ?? '') === '1') return true;
-    $email = current_email();
-    if($email === '') return false;
-    $latest = find_latest_payment_by_email($email);
-    return $latest && (($latest['status'] ?? '') === 'paid');
+
+// =========================
+// LOGOUT
+// =========================
+if ($action === 'logout') {
+
+    // Clear cookies
+    setcookie("logged_in", "", time() - 3600, "/");
+    setcookie("user_name", "", time() - 3600, "/");
+    setcookie("user_email", "", time() - 3600, "/");
+    setcookie("user_password", "", time() - 3600, "/");
+    setcookie("paid", "", time() - 3600, "/");
+
+    header("Location: /signin.php");
+    exit;
 }
 
-function require_login(){ if(!is_logged_in()){ header('Location: /signin.php'); exit; } }
-function require_paid(){ require_login(); if(!has_paid()){ header('Location: /dashboard.php?pay_required=1'); exit; } }
+
+// =========================
+// DEFAULT FALLBACK
+// =========================
+header("Location: /signin.php");
+exit;
+
 ?>
