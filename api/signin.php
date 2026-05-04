@@ -569,17 +569,28 @@
 <body>
   <div class="auth-page">
     <form class="auth-card" action="/auth.php" method="POST">
-      <input type="hidden" name="action" value="signin">
-      <div class="auth-brand">
-        <div class="logo">L</div><strong>LINKSPHERE AGENCIES</strong>
-      </div>
-      <h1>Welcome Back</h1>
-      <p class="muted">Login to continue.</p>
-      <div class="form-group"><label>Email</label><input class="input" id="signinEmail" name="email" type="email" required></div>
-      <div class="form-group"><label>Password</label><input class="input" id="signinPassword" name="password" type="password" required></div><button class="primary-btn">Sign In</button>
-      <p id="error" class="error"></p>
-      <p>No account? <a href="/signup.php" style="color:var(--primary);font-weight:900">Create Account</a></p>
-    </form>
+  <input type="hidden" name="action" value="signin">
+
+  <h1>Welcome Back</h1>
+
+  <div class="form-group">
+    <label>Email</label>
+    <input class="input" name="email" type="email" required>
+  </div>
+
+  <div class="form-group">
+    <label>Password</label>
+    <input class="input" name="password" type="password" required>
+  </div>
+
+  <button class="primary-btn" type="submit">Sign In</button>
+
+  <?php if (($_GET['error'] ?? '') === 'invalid'): ?>
+    <p class="error">Invalid email or password.</p>
+  <?php endif; ?>
+
+  <p>No account? <a href="/signup.php">Create Account</a></p>
+</form>
   </div>
   <script>
     function getCookie(name) {
