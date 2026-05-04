@@ -7,15 +7,15 @@
     }
   },
   "routes": [
+    { "src": "/assets/(.*)", "dest": "/assets/$1" },
+
     { "src": "/api/(.*)", "dest": "/api/$1" },
-    
-    
+
     { "src": "/", "dest": "/api/index.php" },
     { "src": "/index.php", "dest": "/api/index.php" },
     { "src": "/auth.php", "dest": "/api/auth.php" },
     { "src": "/chat.php", "dest": "/api/chat.php" },
     { "src": "/check-payment.php", "dest": "/api/check-payment.php" },
-    { "src": "/config.php.php", "dest": "/api/config.php" },
     { "src": "/dashboard.php", "dest": "/api/dashboard.php" },
     { "src": "/logout.php", "dest": "/api/logout.php" },
     { "src": "/megapay-callback.php", "dest": "/api/megapay-callback.php" },
