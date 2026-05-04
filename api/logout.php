@@ -1,0 +1,1 @@
+<?php setcookie('ls_user','',time()-3600,'/'); setcookie('ls_email','',time()-3600,'/'); header('Location: signin.php'); exit; ?>
