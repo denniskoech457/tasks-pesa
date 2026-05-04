@@ -1,3 +1,13 @@
+<?php
+if (($_COOKIE['logged_in'] ?? '') !== 'yes') {
+    header("Location: /signin.php");
+    exit;
+}
+?>
+<?php
+$name = $_COOKIE['user_name'] ?? 'User';
+echo "Welcome, $name";
+?>
 <?php require_once 'config.php'; require_once 'auth.php'; require_login(); $paid=has_paid(); $user=htmlspecialchars(current_user()); ?>
 <!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dashboard</title><style>
 
