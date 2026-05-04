@@ -570,7 +570,7 @@
     <div class="auth-page">
         <form class="auth-card" id="signupForm" action="/auth.php" method="POST"><input type="hidden" name="action" value="signup">
             <div class="auth-brand">
-                <div class="logo">L</div><strong>LINKSPHERE AGENCIES</strong>
+                <div class="logo">TP</div><strong>TASKS PESA</strong>
             </div>
             <h1>Create Account</h1>
             <p class="muted">Sign up to access your dashboard.</p>
