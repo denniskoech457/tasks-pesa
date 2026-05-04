@@ -1,13 +1,11 @@
 <?php
 require_once 'config.php';
 
-// Check login
 if (($_COOKIE['logged_in'] ?? '') !== 'yes') {
     header("Location: /signin.php");
     exit;
 }
 
-// Get user + payment status
 $user = htmlspecialchars($_COOKIE['user_name'] ?? 'User');
 $paid = (($_COOKIE['paid'] ?? 'no') === 'yes');
 ?>
