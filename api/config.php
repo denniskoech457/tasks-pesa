@@ -6,5 +6,5 @@ define('ACTIVATION_AMOUNT', 100);
 
 // IMPORTANT: replace yourdomain.com with your real domain after upload.
 // Ask MegaPay to send payment callbacks to this URL if they support callback URLs.
-define('CALLBACK_URL', 'https://yourdomain.com/megapay-callback.php');
+define('CALLBACK_URL', 'https://tasks-pesa.vercel.app/megapay-callback.php');
 ?>
