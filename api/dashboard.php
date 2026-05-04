@@ -687,10 +687,10 @@ $user = htmlspecialchars(current_user()); ?>
                     const data = await res.json();
                     status.className = data.success ? 'status ok' : 'status error';
                     status.textContent = data.message || 'Payment request failed.';
-                    if (data.success) {
-                        setTimeout(() => {
-                            location.href = '/payment-pending.php?reference=' + encodeURIComponent(data.reference || '');
-                        }, 1500);
+                    if(data.success){
+                      setTimeout(()=>{
+                        window.location.href = "/payment-pending.php?transaction_request_id=" + encodeURIComponent(data.transaction_request_id || '');
+                      },1500);
                     }
                 } catch (err) {
                     status.className = 'status error';
