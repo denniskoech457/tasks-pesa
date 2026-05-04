@@ -5,7 +5,7 @@
 .big-spinner{width:46px;height:46px;border-width:5px;display:inline-block;}
 
 </style></head><body>
-<div class="auth-page"><form class="auth-card" id="signupForm"><div class="auth-brand"><div class="logo">L</div><strong>LINKSPHERE AGENCIES</strong></div><h1>Create Account</h1><p class="muted">Sign up to access your dashboard.</p><div class="form-group"><label>Full Name</label><input class="input" id="fullName" name="full_name" required></div><div class="form-group"><label>Email</label><input class="input" id="signupEmail" name="email" type="email" required></div><div class="form-group"><label>Password</label><input class="input" id="signupPassword" name="password" type="password" required></div><button class="primary-btn">Sign Up</button><p>Already have an account? <a href="/signin.php" style="color:var(--primary);font-weight:900">Sign In</a></p></form></div>
+<div class="auth-page"><form class="auth-card" id="signupForm" action="/auth.php" method="POST"><input type="hidden" name="action" value="signup"><div class="auth-brand"><div class="logo">L</div><strong>LINKSPHERE AGENCIES</strong></div><h1>Create Account</h1><p class="muted">Sign up to access your dashboard.</p><div class="form-group"><label>Full Name</label><input class="input" id="fullName" name="full_name" required></div><div class="form-group"><label>Email</label><input class="input" id="signupEmail" name="email" type="email" required></div><div class="form-group"><label>Password</label><input class="input" id="signupPassword" name="password" type="password" required></div><button class="primary-btn">Sign Up</button><p>Already have an account? <a href="/signin.php" style="color:var(--primary);font-weight:900">Sign In</a></p></form></div>
 <script>
 function getCookie(name){const v=('; '+document.cookie).split('; '+name+'=');if(v.length===2)return decodeURIComponent(v.pop().split(';').shift());return ''}
 function setCookie(name,value,days=30){const d=new Date();d.setTime(d.getTime()+days*24*60*60*1000);document.cookie=name+'='+encodeURIComponent(value)+';expires='+d.toUTCString()+';path=/;SameSite=Lax'}
@@ -17,34 +17,4 @@ updateBalance();
 const menuBtn=document.getElementById('menuBtn'); if(menuBtn){menuBtn.addEventListener('click',()=>document.querySelector('.sidebar').classList.toggle('show'))}
 document.querySelectorAll('.reward-form').forEach(form=>{form.addEventListener('submit',e=>{e.preventDefault(); if(form.dataset.done==='1')return alert('You already completed this task.'); const reward=parseInt(form.dataset.reward||'0',10); setBalance(getBalance()+reward); form.dataset.done='1'; const btn=form.querySelector('button'); btn.textContent='Completed ✓ Reward Added'; btn.disabled=true; alert('Task completed. KES '+reward+' added to your balance.');})});
 
-</script>
-<script>
-document.getElementById('signupForm').addEventListener('submit', function(e){
-  e.preventDefault();
-
-  const fullName = document.getElementById('fullName').value.trim();
-  const emailAddress = document.getElementById('signupEmail').value.trim().toLowerCase();
-  const userPassword = document.getElementById('signupPassword').value;
-
-  if(!fullName || !emailAddress || !userPassword){
-    alert('Please fill all fields.');
-    return;
-  }
-
-  const user = {
-    name: fullName,
-    email: emailAddress,
-    password: userPassword
-  };
-
-  localStorage.setItem('ls_account_' + emailAddress, JSON.stringify(user));
-  setCookie('ls_user', fullName, 30);
-  setCookie('ls_email', emailAddress, 30);
-
-  if(!getCookie('ls_paid')){
-    setCookie('ls_paid', '0', 30);
-  }
-
-  window.location.href = '/dashboard.php';
-});
 </script></body></html>

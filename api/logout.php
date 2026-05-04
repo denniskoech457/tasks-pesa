@@ -1,1 +1,2 @@
-<?php setcookie('ls_user','',time()-3600,'/'); setcookie('ls_email','',time()-3600,'/'); header('Location: /signin.php'); exit; ?>
+<?php require_once 'auth.php'; ?>
+<form id="logoutForm" action="/auth.php" method="POST"><input type="hidden" name="action" value="logout"></form><script>document.getElementById('logoutForm').submit();</script>
