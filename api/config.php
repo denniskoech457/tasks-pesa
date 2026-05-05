@@ -17,4 +17,3 @@ define('ACTIVATION_AMOUNT', 100);
 // Example: https://your-project.vercel.app/api/megapay-callback.php
 define('CALLBACK_URL', 'https://tasks-pesa.vercel.app/api/megapay-callback.php');
 ?>
-
