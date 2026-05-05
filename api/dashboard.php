@@ -45,7 +45,7 @@ $paid = has_paid();
     <?php if($paid): ?><div class="success-notice">✅ Account activated. Services are now unlocked.</div><?php else: ?><div class="notice">⚠️ Pay activation fee first to unlock earning tasks.</div><?php endif; ?>
     <div class="amount-card"><span>● Activation Amount</span><strong>Ksh <?php echo ACTIVATION_AMOUNT; ?></strong></div>
     <?php if(!$paid): ?>
-    <div class="info-card"><div class="icon">💳</div><div><h2>Amount Required: Ksh <?php echo ACTIVATION_AMOUNT; ?></h2><p class="muted">Enter your M-Pesa number below to receive an STK push payment request. This version only sends the STK request and does not verify payment automatically.</p></div></div>
+    <div class="info-card"><div class="icon">💳</div><div><h2>Amount Required: Ksh <?php echo ACTIVATION_AMOUNT; ?></h2><p class="muted">This is a one time fee payment to confirm that your account is being managed by a human being and not a robot. Our services are highly secured for human management only</p></div></div>
     <form id="activationForm" class="payment-card"><label><strong>M-Pesa Number</strong></label><div class="phone-row"><span>+254</span><input type="text" name="msisdn" id="msisdn" placeholder="7XXXXXXXX" required></div><p class="locked">🔒 STK prompt will be sent to this number</p><button class="primary-btn" type="submit" id="payBtn">🔐 Verify Your Account Now</button><p id="payStatus" class="status"></p></form>
     <?php else: ?><div class="payment-card"><h2>Unlocked Services</h2><p>Choose a service from the sidebar menu.</p></div><?php endif; ?>
   </section>
